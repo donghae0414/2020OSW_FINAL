@@ -1,0 +1,6 @@
+from bangtal import Object
+
+class Background(Object):
+    def __init__(self, image, x = 0):
+        super().__init__(image)
+        self.x = x
