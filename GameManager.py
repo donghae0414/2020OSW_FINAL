@@ -1,8 +1,11 @@
 from Models.Background import *
 from Models.User import *
 
+from Models.RedMan import *
+
 from Timers.BackgroundTimer import *
 
+from Generator import *
 
 class GameManager:
     def __init__(self, scene):
@@ -22,7 +25,11 @@ class GameManager:
         self.user = User('Images/character/user/run/user_1.png', self.scene)
         self.user.locate(self.scene, self.user.x, self.user.y)
         self.user.show()
+
+        self.generator = Generator(self.scene)
+        self.generator.create_redman()
         
+
     def onKeyBoard(self, key, pressed):
         if key == 84 and pressed:
             if self.user.y == 45:
