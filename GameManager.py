@@ -35,4 +35,3 @@ class GameManager:
             if self.user.y == 45:
                 self.user.jump()
     
-

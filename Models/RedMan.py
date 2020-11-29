@@ -22,6 +22,7 @@ class RedManTimer(Timer):
         super().__init__(seconds)
         self.redman = redman
         self.user = user
+
     def onTimeout(self):
         self.redman.run()
         #print(self.user.x, self.user.y)
