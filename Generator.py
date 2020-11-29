@@ -32,7 +32,7 @@ class GeneratorTimer(Timer):
     def onTimeout(self):
         now = time.time() - self.st
 
-        print(now)
+        #print(now)
         if now > 2 :
             self.lock.acquire()
             self.st = time.time()

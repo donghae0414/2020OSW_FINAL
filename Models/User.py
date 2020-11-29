@@ -1,5 +1,5 @@
 from enum import Enum
-from bangtal import Object, Timer
+from bangtal import *
 
 class User(Object):
     def __init__(self, image, scene):
@@ -10,7 +10,15 @@ class User(Object):
         self.y = 45
         self.up_velocity = 0
 
-        self.heart = 3
+        self.life = 3
+        self.life_img=[]
+        for i in range(self.life) :
+            img = Object('Images/life.png')
+            self.life_img.append(img)
+            img.setScale(0.1)
+            img.locate(self.scene, 1100+i*50, 650)
+            img.show()
+        
 
         self.state = UserState.RUN
         self.run_state = 0  # 0 ~ 5
@@ -19,6 +27,17 @@ class User(Object):
 
         self.user_run_Timer = UserRunTimer(0.1, self)
         self.user_run_Timer.start()
+
+    def crush(self) :
+        if self.life == 1 :
+            endGame()
+        else :
+            self.life -=1
+            self.life_img[-1].hide()
+            del self.life_img[-1]
+            print('crush!!')
+
+
 
     def run(self):
         if self.state == UserState.RUN:

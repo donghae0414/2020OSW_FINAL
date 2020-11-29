@@ -35,12 +35,8 @@ class RedManTimer(Timer):
         #print(self.user.x)
         #print(self.user.y)
         if 80<x<120 and 45<=self.user.y<60 and not self.redman.attacked:
-            if self.user.heart == 1 :
-                endGame()
-            else :
-                self.redman.attacked=True
-                print('crush!!')
-                self.user.heart-=1
+            self.user.crush()
+            self.redman.attacked=True
                 
         
         
