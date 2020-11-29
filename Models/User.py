@@ -25,7 +25,7 @@ class User(Object):
                 self.run_state = 0
 
             self.setImage('Images/character/user/run/user_' + str(self.run_state) + '.png')        
-    
+            
     def jump(self):
         self.up_velocity = 30
         self.state = UserState.JUMP
@@ -57,7 +57,7 @@ class UserJumpTimer(Timer):
                 self.user.user_run_Timer.start()
 
             self.user.locate(self.user.scene, self.user.x, self.user.y)
-        
+            
             self.set(0.01)
             self.start()
 
@@ -68,6 +68,6 @@ class UserRunTimer(Timer):
 
     def onTimeout(self):
         self.user.run()
-
+        
         self.set(0.1)
         self.start()

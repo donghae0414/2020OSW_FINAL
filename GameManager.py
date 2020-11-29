@@ -26,7 +26,7 @@ class GameManager:
         self.user.locate(self.scene, self.user.x, self.user.y)
         self.user.show()
 
-        self.generator = Generator(self.scene)
+        self.generator = Generator(self.scene, self.user)
         self.generator.create_redman()
         
 

@@ -18,3 +18,4 @@ def startButton_onMouseAction(x, y, action):
 startButton.onMouseAction = startButton_onMouseAction
 
 startGame(MenuScene)
+

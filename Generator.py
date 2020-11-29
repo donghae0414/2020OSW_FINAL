@@ -4,12 +4,13 @@ class Generator:
 
     num_of_enemy = 0
 
-    def __init__(self, scene):
+    def __init__(self, scene, user):
         self.scene = scene
+        self.user = user
 
-    # example »ý¼º ½ÇÇè
+    # example ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     def create_redman(self):
-        redman = RedMan(self.scene, 1280, 45, 0, 0, 15, 'Images/character/enemy/redman.png')
+        redman = RedMan(self.scene, 1280, 45, 0, 0, 15, self.user, 'Images/character/enemy/redman.png')
         redman.locate(self.scene, redman.x, redman.y)
         redman.setScale(0.6)
         redman.show()

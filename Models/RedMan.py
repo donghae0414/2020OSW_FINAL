@@ -1,13 +1,13 @@
 from Models.Enemy import Enemy
-from bangtal import Timer
+from bangtal import *
 
 class RedMan(Enemy):
-    def __init__(self, scene, x, y, x_size, y_size, velocity, image='/Images/character/enemy/redman.png'):
+    def __init__(self, scene, x, y, x_size, y_size, velocity, user, image='/Images/character/enemy/redman.png'):
         super().__init__(scene, x, y, x_size, y_size, velocity, image)
-
-        self.timer = RedManTimer(0.01, self)
+        self.user = user
+        self.timer = RedManTimer(0.01, self, self.user)
         self.timer.start()
-
+        
     def run(self):
         self.x -= self.velocity
         self.locate(self.scene, self.x, self.y)
@@ -16,14 +16,24 @@ class RedMan(Enemy):
  
 
 class RedManTimer(Timer):
-    def __init__(self, seconds, redman):
+    def __init__(self, seconds, redman, user):
         super().__init__(seconds)
         self.redman = redman
-
+        self.user = user
     def onTimeout(self):
         self.redman.run()
-        
+        #print(self.user.x, self.user.y)
+        self.check_crush()
         self.set(0.01)
         self.start()
+    
+    def check_crush(self) :
+        x, y= self.redman.x, self.redman.y
+        #print(x)
+        #print(self.user.x)
+        print(self.user.y)
+        if 80<x<120 and 45<=self.user.y<60 :
+            print('crush!!')
+            endGame()
         
         
