@@ -10,6 +10,8 @@ class User(Object):
         self.y = 45
         self.up_velocity = 0
 
+        self.heart = 3
+
         self.state = UserState.RUN
         self.run_state = 0  # 0 ~ 5
 

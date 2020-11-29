@@ -5,6 +5,8 @@ class RedMan(Enemy):
     def __init__(self, scene, x, y, x_size, y_size, velocity, user, image='/Images/character/enemy/redman.png'):
         super().__init__(scene, x, y, x_size, y_size, velocity, image)
         self.user = user
+        self.attacked = False
+
         self.timer = RedManTimer(0.01, self, self.user)
         self.timer.start()
         
@@ -31,9 +33,14 @@ class RedManTimer(Timer):
         x, y= self.redman.x, self.redman.y
         #print(x)
         #print(self.user.x)
-        print(self.user.y)
-        if 80<x<120 and 45<=self.user.y<60 :
-            print('crush!!')
-            endGame()
+        #print(self.user.y)
+        if 80<x<120 and 45<=self.user.y<60 and not self.redman.attacked:
+            if self.user.heart == 1 :
+                endGame()
+            else :
+                self.redman.attacked=True
+                print('crush!!')
+                self.user.heart-=1
+                
         
         
