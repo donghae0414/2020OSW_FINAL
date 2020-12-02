@@ -8,8 +8,11 @@ class User(Object):
         self.scene = scene
         self.x = 100
         self.y = 45
+
         self.up_velocity = 0
         self.down_velocity = 0
+        self.ahead_velocity = 5
+        self.back_velocity = -5
 
         self.life = 3
         self.life_img=[]
@@ -23,6 +26,9 @@ class User(Object):
 
         self.state = UserState.RUN
         self.run_state = 0  # 0 ~ 5
+
+        self.is_ahead_stop = True
+        self.is_back_stop = True
 
         self.user_jump_Timer = UserJumpTimer(0.01, self)
         self.user_down_Timer = UserDownTimer(0.01, self)
@@ -41,7 +47,6 @@ class User(Object):
             print('crush!!')
 
 
-
     def run(self):
         if self.state == UserState.RUN:
             self.run_state += 1
@@ -58,17 +63,16 @@ class User(Object):
         self.user_jump_Timer.start()
 
     def down(self):
-        self.down_velocity = 0
-        self.state = UserState.DOWN
-        self.user_jump_Timer.stop()
-        self.user_down_Timer.start()
+        #self.down_velocity = 0
+        #self.state = UserState.DOWN
+        #self.user_jump_Timer.stop()
+        #self.user_down_Timer.start()
+        self.up_velocity -= 15
 
     def ahead(self):
-        self.x += 5
         self.user_ahead_Timer.start()
     
     def back(self):
-        self.x -= 5
         self.user_back_Timer.start()    
 
     def stop(self):
@@ -134,10 +138,14 @@ class UserAheadTimer(Timer):
 
     def onTimeout(self):
         if self.user.x <= 700:
-            self.user.ahead()
+            self.user.x += self.user.ahead_velocity
             self.user.locate(self.user.scene, self.user.x, self.user.y)
-            self.set(0.01)
-            self.start()
+
+            #self.user.ahead()
+
+            if not self.user.is_ahead_stop:
+                self.set(0.01)
+                self.start()
 
 class UserBackTimer(Timer):
     def __init__(self, seconds, user):
@@ -145,11 +153,14 @@ class UserBackTimer(Timer):
         self.user = user
 
     def onTimeout(self):
-        if self.user.x >= 100:
-            self.user.back()
+        if self.user.x >= 20:
+            self.user.x += self.user.back_velocity
             self.user.locate(self.user.scene, self.user.x, self.user.y)
-            self.set(0.01)
-            self.start()
+
+            #self.user.back()
+            if not self.user.is_back_stop:
+                self.set(0.01)
+                self.start()
 
 class UserRunTimer(Timer):
     def __init__(self, seconds, user):
