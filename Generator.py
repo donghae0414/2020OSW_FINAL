@@ -18,28 +18,24 @@ class Generator(Object):
         self.timer = GeneratorTimer(0.01, self)
         self.timer.start()
 
-    def create_redman(self):
-        redman = RedMan(self.scene, 1280, 45, 0, 0, 15, self.user, 'Images/character/enemy/redman.png')
+    def create_redman(self, velocity):
+        redman = RedMan(self.scene, 1280, 45, 250, 250, velocity, self.user, 'Images/character/enemy/redman.png', scale=0.6)
         redman.locate(self.scene, redman.x, redman.y)
-        redman.setScale(0.6)
         redman.show()
 
-    def create_pig(self):
-        pig = Pig(self.scene, 1280, 45, 0, 0, 10, self.user, 'Images/character/enemy/pig.png')
+    def create_pig(self, velocity):
+        pig = Pig(self.scene, 1280, 45, 300, 262, velocity + 5, self.user, 'Images/character/enemy/pig.png', scale=0.6)
         pig.locate(self.scene, pig.x, pig.y)
-        pig.setScale(0.6)
         pig.show()
 
-    def create_turtle(self):
-        turtle = Turtle(self.scene, 1280, 45, 0, 0, 10, self.user, 'Images/character/enemy/turtle.png')
+    def create_turtle(self, velocity):
+        turtle = Turtle(self.scene, 1280, 45, 300, 252, velocity - 5, self.user, 'Images/character/enemy/turtle.png', scale=0.6)
         turtle.locate(self.scene, turtle.x, turtle.y)
-        turtle.setScale(0.6)
         turtle.show()
 
-    def create_bird(self):
-        bird = Bird(self.scene, 1280, 400, 0, 0, 10, self.user, 'Images/character/enemy/bird.png')
+    def create_bird(self, velocity):
+        bird = Bird(self.scene, 1280, 400, 300, 237, velocity, self.user, 'Images/character/enemy/bird.png', scale=0.6)
         bird.locate(self.scene, bird.x, bird.y)
-        bird.setScale(0.6)
         bird.show()
 
 
@@ -55,8 +51,8 @@ class GeneratorTimer(Timer):
 
     def onTimeout(self):
         now = time.time() - self.st
+        self.count += 0.1
 
-        #print(now)
         if now > 2 :
             self.lock.acquire()
             self.st = time.time()
@@ -64,21 +60,22 @@ class GeneratorTimer(Timer):
             self.random_choose_character()
             
             self.lock.release()
-            
-        #print(self.user.x, self.user.y)
-        
+                    
         #self.set(0.01)
         self.start()
 
     def random_choose_character(self):
         case = random.randint(0, self.character_num - 1)
+
+        velocity = 10 #TODO 변수화 되어야함, 시간에 따른 & 생성시간도 단축하면 좋음
+
         if case == 0:
-            self.generator.create_redman()
+            self.generator.create_redman(velocity)
         elif case == 1:
-            self.generator.create_pig()
+            self.generator.create_pig(velocity)
         elif case == 2:
-            self.generator.create_turtle()
+            self.generator.create_turtle(velocity)
         elif case == 3:
-            self.generator.create_bird()
+            self.generator.create_bird(velocity)
         else:
             pass

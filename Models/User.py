@@ -6,8 +6,10 @@ class User(Object):
         super().__init__(image)
         self.image = image
         self.scene = scene
-        self.x = 100
-        self.y = 45
+
+        self.x = 100;   self.y = 45
+        self.x_size = 265;  self.y_size = 260;
+        self.scale = 1
 
         self.up_velocity = 0
         self.down_velocity = 0
@@ -31,11 +33,15 @@ class User(Object):
         self.is_back_stop = True
 
         self.user_jump_Timer = UserJumpTimer(0.01, self)
-        self.user_down_Timer = UserDownTimer(0.01, self)
+        #self.user_down_Timer = UserDownTimer(0.01, self)
         self.user_ahead_Timer = UserAheadTimer(0.01, self)
         self.user_back_Timer = UserBackTimer(0.01, self)
         self.user_run_Timer = UserRunTimer(0.1, self)
         self.user_run_Timer.start()
+    
+    def locate(self, scene, x, y):
+        super().locate(scene, x, y)
+        super().setScale(self.scale)
 
     def crush(self) :
         if self.life == 1 :
@@ -67,7 +73,10 @@ class User(Object):
         #self.state = UserState.DOWN
         #self.user_jump_Timer.stop()
         #self.user_down_Timer.start()
-        self.up_velocity -= 15
+        if self.state == UserState.JUMP:
+            self.up_velocity = -15
+        else:                               #TODO 납작 업드리기
+                print('드러눕기 구현해라')
 
     def ahead(self):
         self.user_ahead_Timer.start()
@@ -106,30 +115,7 @@ class UserJumpTimer(Timer):
             self.set(0.01)
             self.start()
 
-class UserDownTimer(Timer):
-    def __init__(self, seconds, user):
-        super().__init__(seconds)
-        self.user = user
 
-    def onTimeout(self):
-        if self.user.state == UserState.DOWN:
-            if self.user.up_velocity > 0:
-                self.user.y -= self.user.down_velocity
-                self.user.down_velocity += 1
-            else:
-                self.user.y += self.user.up_velocity
-                self.user.up_velocity -= 1
-
-            if self.user.y <= 45:
-                self.user.y = 45; self.user.down_velocity = 0.0
-                self.user.state = UserState.RUN
-                self.user.user_run_Timer.set(0.1)
-                self.user.user_run_Timer.start()
-
-            self.user.locate(self.user.scene, self.user.x, self.user.y)
-            
-            self.set(0.01)
-            self.start()
 
 class UserAheadTimer(Timer):
     def __init__(self, seconds, user):
@@ -137,7 +123,7 @@ class UserAheadTimer(Timer):
         self.user = user
 
     def onTimeout(self):
-        if self.user.x <= 700:
+        if self.user.x <= 1000:
             self.user.x += self.user.ahead_velocity
             self.user.locate(self.user.scene, self.user.x, self.user.y)
 
@@ -172,3 +158,29 @@ class UserRunTimer(Timer):
         
         self.set(0.1)
         self.start()
+
+
+#class UserDownTimer(Timer):
+#    def __init__(self, seconds, user):
+#        super().__init__(seconds)
+#        self.user = user
+
+#    def onTimeout(self):
+#        if self.user.state == UserState.DOWN:
+#            if self.user.up_velocity > 0:
+#                self.user.y -= self.user.down_velocity
+#                self.user.down_velocity += 1
+#            else:
+#                self.user.y += self.user.up_velocity
+#                self.user.up_velocity -= 1
+
+#            if self.user.y <= 45:
+#                self.user.y = 45; self.user.down_velocity = 0.0
+#                self.user.state = UserState.RUN
+#                self.user.user_run_Timer.set(0.1)
+#                self.user.user_run_Timer.start()
+
+#            self.user.locate(self.user.scene, self.user.x, self.user.y)
+            
+#            self.set(0.01)
+#            self.start()

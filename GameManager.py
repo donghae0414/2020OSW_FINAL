@@ -29,22 +29,20 @@ class GameManager:
         self.generator = Generator(self.scene, self.user)        
 
     def onKeyBoard(self, key, pressed):
-        if key == 84 and pressed:
+        if key == 84 and pressed:                   # Up Button
             if self.user.y == 45:
                 self.user.jump()
 
-        elif key == 85 and pressed: # Down Button
-            if self.user.y > 45:
-                self.user.down()
+        elif key == 85 and pressed:                 # Down Button
+            self.user.down()
 
         elif key == 83:                             # Ahead Button
             if pressed:
-                if self.user.x <= 700:
+                if self.user.x <= 1000:
                     self.user.is_ahead_stop = False
                     self.user.ahead()
             else:                                   # Stop during going ahead
                 self.user.is_ahead_stop = True
-                #self.user.stop()
 
         elif key == 82:                             # Back Button
             if pressed:
