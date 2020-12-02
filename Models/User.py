@@ -38,8 +38,6 @@ class User(Object):
             self.life -=1
             self.life_img[-1].hide()
             del self.life_img[-1]
-            self.crush = True
-            self.setImage('user_4_sick.png')
             print('crush!!')
 
 
