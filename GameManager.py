@@ -32,4 +32,16 @@ class GameManager:
         if key == 84 and pressed:
             if self.user.y == 45:
                 self.user.jump()
-    
+        elif key == 85 and pressed: # Down Button
+            if self.user.y > 45:
+                self.user.down()
+        elif key == 83 and pressed: # Ahead Button
+            if self.user.x <= 700:
+                self.user.ahead()
+        elif key == 83 and not pressed: # Stop during going ahead
+            self.user.stop()
+        elif key == 82 and pressed: # Back Button
+            if self.user.x >= 100:
+                self.user.back()        
+        elif key == 82 and not pressed: # Stop during going back
+            self.user.stop()

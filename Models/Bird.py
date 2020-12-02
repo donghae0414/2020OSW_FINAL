@@ -31,8 +31,9 @@ class BirdTimer(Timer):
     
     def check_crush(self) :
         x, y= self.bird.x, self.bird.y
+        X = self.user.x
 
-        if 80<x<120 and y<=self.user.y<y+100 and not self.bird.attacked:
+        if X-20<x<X+20 and y<=self.user.y<y+100 and not self.bird.attacked:
             self.user.crush()
             self.bird.attacked=True
                 

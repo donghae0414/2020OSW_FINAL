@@ -31,11 +31,10 @@ class RedManTimer(Timer):
         self.start()
     
     def check_crush(self) :
-        x, y= self.redman.x, self.redman.y
-        #print(x)
-        #print(self.user.x)
-        #print(self.user.y)
-        if 80<x<120 and 45<=self.user.y<60 and not self.redman.attacked:
+        x = self.redman.x
+        X = self.user.x
+
+        if X-20<x<X+20 and 45<=self.user.y<60 and not self.redman.attacked:
             self.user.crush()
             self.redman.attacked=True
                 

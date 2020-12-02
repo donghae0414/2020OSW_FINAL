@@ -9,6 +9,7 @@ class User(Object):
         self.x = 100
         self.y = 45
         self.up_velocity = 0
+        self.down_velocity = 0
 
         self.life = 3
         self.life_img=[]
@@ -24,7 +25,9 @@ class User(Object):
         self.run_state = 0  # 0 ~ 5
 
         self.user_jump_Timer = UserJumpTimer(0.01, self)
-
+        self.user_down_Timer = UserDownTimer(0.01, self)
+        self.user_ahead_Timer = UserAheadTimer(0.01, self)
+        self.user_back_Timer = UserBackTimer(0.01, self)
         self.user_run_Timer = UserRunTimer(0.1, self)
         self.user_run_Timer.start()
 
@@ -35,6 +38,8 @@ class User(Object):
             self.life -=1
             self.life_img[-1].hide()
             del self.life_img[-1]
+            self.crush = True
+            self.setImage('user_4_sick.png')
             print('crush!!')
 
 
@@ -46,7 +51,7 @@ class User(Object):
                 self.run_state = 0
 
             self.setImage('Images/character/user/run/user_' + str(self.run_state) + '.png')        
-            
+    
     def jump(self):
         self.up_velocity = 30
         self.state = UserState.JUMP
@@ -54,12 +59,29 @@ class User(Object):
         self.user_run_Timer.stop()
         self.user_jump_Timer.start()
 
+    def down(self):
+        self.down_velocity = 0
+        self.state = UserState.DOWN
+        self.user_jump_Timer.stop()
+        self.user_down_Timer.start()
+
+    def ahead(self):
+        self.x += 5
+        self.user_ahead_Timer.start()
+    
+    def back(self):
+        self.x -= 5
+        self.user_back_Timer.start()    
+
+    def stop(self):
+        self.user_ahead_Timer.stop()
+        self.user_back_Timer.stop()
 
 
 class UserState(Enum):
     RUN = 0,
-    JUMP = 1
-
+    JUMP = 1,
+    DOWN = 2
 
 class UserJumpTimer(Timer):
     def __init__(self, seconds, user):
@@ -79,6 +101,55 @@ class UserJumpTimer(Timer):
 
             self.user.locate(self.user.scene, self.user.x, self.user.y)
             
+            self.set(0.01)
+            self.start()
+
+class UserDownTimer(Timer):
+    def __init__(self, seconds, user):
+        super().__init__(seconds)
+        self.user = user
+
+    def onTimeout(self):
+        if self.user.state == UserState.DOWN:
+            if self.user.up_velocity > 0:
+                self.user.y -= self.user.down_velocity
+                self.user.down_velocity += 1
+            else:
+                self.user.y += self.user.up_velocity
+                self.user.up_velocity -= 1
+
+            if self.user.y <= 45:
+                self.user.y = 45; self.user.down_velocity = 0.0
+                self.user.state = UserState.RUN
+                self.user.user_run_Timer.set(0.1)
+                self.user.user_run_Timer.start()
+
+            self.user.locate(self.user.scene, self.user.x, self.user.y)
+            
+            self.set(0.01)
+            self.start()
+
+class UserAheadTimer(Timer):
+    def __init__(self, seconds, user):
+        super().__init__(seconds)
+        self.user = user
+
+    def onTimeout(self):
+        if self.user.x <= 700:
+            self.user.ahead()
+            self.user.locate(self.user.scene, self.user.x, self.user.y)
+            self.set(0.01)
+            self.start()
+
+class UserBackTimer(Timer):
+    def __init__(self, seconds, user):
+        super().__init__(seconds)
+        self.user = user
+
+    def onTimeout(self):
+        if self.user.x >= 100:
+            self.user.back()
+            self.user.locate(self.user.scene, self.user.x, self.user.y)
             self.set(0.01)
             self.start()
 

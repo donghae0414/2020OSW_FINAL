@@ -25,15 +25,15 @@ class PigTimer(Timer):
 
     def onTimeout(self):
         self.pig.run()
-        #print(self.user.x, self.user.y)
         self.check_crush()
         self.set(0.01)
         self.start()
     
     def check_crush(self) :
-        x, y= self.pig.x, self.pig.y
+        x = self.pig.x
+        X = self.user.x
 
-        if 80<x<120 and 45<=self.user.y<60 and not self.pig.attacked:
+        if X-20<x<X+20 and 45<=self.user.y<60 and not self.pig.attacked:
             self.user.crush()
             self.pig.attacked=True
                 

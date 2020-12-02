@@ -31,9 +31,10 @@ class TurtleTimer(Timer):
         self.start()
     
     def check_crush(self) :
-        x, y= self.turtle.x, self.turtle.y
+        x = self.turtle.x
+        X = self.user.x
 
-        if 80<x<120 and 45<=self.user.y<60 and not self.turtle.attacked:
+        if X-20<x<X+20 and 45<=self.user.y<60 and not self.turtle.attacked:
             self.user.crush()
             self.turtle.attacked=True
                 
