@@ -8,6 +8,7 @@ setGameOption(GameOption.MESSAGE_BOX_BUTTON, False)
 MenuScene = Scene('MENU', 'Images/background/background.png')
 GameScene = Scene('GAME', 'Images/button/start.png')
 
+
 startButton = Object('Images/button/start.png')
 startButton.locate(MenuScene, 570, 200)
 startButton.show()

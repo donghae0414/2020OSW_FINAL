@@ -51,7 +51,6 @@ class GeneratorTimer(Timer):
 
     def onTimeout(self):
         now = time.time() - self.st
-        self.count += 0.1
 
         if now > 2 :
             self.lock.acquire()

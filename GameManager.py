@@ -26,7 +26,9 @@ class GameManager:
         self.user.locate(self.scene, self.user.x, self.user.y)
         self.user.show()
         
-        self.generator = Generator(self.scene, self.user)        
+        self.generator = Generator(self.scene, self.user)
+        
+        
 
     def onKeyBoard(self, key, pressed):
         if key == 84 and pressed:                   # Up Button

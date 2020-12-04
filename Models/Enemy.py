@@ -32,13 +32,30 @@ class EnemyTimer(Timer):
         super().__init__(seconds)
         self.enemy = enemy
         self.user = user
+        self.combo_checked = False
 
     def onTimeout(self):
         self.enemy.run()
         self.check_crush()
-        self.set(0.01)
-        self.start()
+        if not self.combo_checked:
+            self.check_combo()
+
+        if self.enemy.x > (-1)*self.enemy.x_size:
+            self.set(0.01)
+            self.start()
     
+    def check_combo(self):
+        small_enemy_x = self.enemy.x
+        enemy_x_size = self.enemy.x_size
+        big_enemy_x = small_enemy_x + enemy_x_size*self.enemy.scale
+        
+        small_user_x = self.user.x
+        
+        if big_enemy_x < small_user_x and not self.enemy.attacked:
+            self.combo_checked = True
+            self.user.add_combo()
+
+
     def check_crush(self) :
         enemy_x_size, enemy_y_size = self.enemy.x_size, self.enemy.y_size
 

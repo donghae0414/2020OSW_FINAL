@@ -25,6 +25,8 @@ class User(Object):
             img.locate(self.scene, 1100+i*50, 650)
             img.show()
         
+        self.combo = 0
+
 
         self.state = UserState.RUN
         self.run_state = 0  # 0 ~ 5
@@ -43,7 +45,41 @@ class User(Object):
         super().locate(scene, x, y)
         super().setScale(self.scale)
 
+    def add_combo(self):
+        self.combo += 1
+        
+        first_num = int(self.combo / 10)
+        second_num = self.combo % 10
+
+        print(first_num, second_num)
+
+        second = Object('Images/number/' + str(second_num) + '.png')
+        second.x = 920; second.y = 500; second.scene = self.scene; second.scale = 0.8
+        second.locate(self.scene, 920, 450)
+        second.setScale(0.8)
+        second.show()
+
+        combo = Object('Images/combo.png')
+        combo.x = 1000; combo.y = 530; combo.scene = self.scene; combo.scale = 0.4
+        combo.locate(self.scene, 1000, 480)
+        combo.setScale(0.4)
+        combo.show()
+
+        if first_num != 0:
+            first = Object('Images/number/' + str(first_num) + '.png')
+            first.x = 850; first.y = 500; first.scene = self.scene; first.scale = 0.8
+            first.locate(self.scene, 840, 450)
+            first.setScale(0.8)
+            first.show()
+            t = ComboTimer(0.01, first, second, combo)
+            t.start()
+        else:
+            t = ComboTimer(0.01, second, combo)
+            t.start()
+        
+
     def crush(self) :
+        self.combo = 0
         if self.life == 1 :
             endGame()
         else :
@@ -159,28 +195,26 @@ class UserRunTimer(Timer):
         self.set(0.1)
         self.start()
 
+class ComboTimer(Timer):
+    def __init__(self, seconds, *objects):
+        super().__init__(seconds)
+        self.limit = 0.25
+        self.second = seconds
+        self.now_duration = 0
+        self.objects = objects
 
-#class UserDownTimer(Timer):
-#    def __init__(self, seconds, user):
-#        super().__init__(seconds)
-#        self.user = user
+    def onTimeout(self):
+        self.now_duration += self.second
 
-#    def onTimeout(self):
-#        if self.user.state == UserState.DOWN:
-#            if self.user.up_velocity > 0:
-#                self.user.y -= self.user.down_velocity
-#                self.user.down_velocity += 1
-#            else:
-#                self.user.y += self.user.up_velocity
-#                self.user.up_velocity -= 1
+        for object in self.objects:
+            object.y += 4
+            object.locate(object.scene, object.x, object.y)
+            object.setScale(object.scale)
+            object.show()
 
-#            if self.user.y <= 45:
-#                self.user.y = 45; self.user.down_velocity = 0.0
-#                self.user.state = UserState.RUN
-#                self.user.user_run_Timer.set(0.1)
-#                self.user.user_run_Timer.start()
-
-#            self.user.locate(self.user.scene, self.user.x, self.user.y)
-            
-#            self.set(0.01)
-#            self.start()
+        if self.limit > self.now_duration:
+            self.set(self.second)
+            self.start()
+        else:
+            for object in self.objects:
+                object.hide()
