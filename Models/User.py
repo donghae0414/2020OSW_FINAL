@@ -19,6 +19,9 @@ class User(Object):
         self.ahead_velocity = 5
         self.back_velocity = -5
 
+        self.up_background_velocity = None
+        self.down_background_velocity = None
+        
         self.jump_count = 0
 
         self.life = 3
@@ -27,7 +30,7 @@ class User(Object):
             img = Object('Images/life.png')
             self.life_img.append(img)
             img.setScale(0.1)
-            img.locate(self.scene, 1100+i*50, 650)
+            img.locate(self.scene, 1200 - i*50, 650)
             img.show()
         
         self.combo = 0
@@ -46,14 +49,22 @@ class User(Object):
         self.user_run_Timer = UserRunTimer(0.1, self)
         self.user_run_Timer.start()
     
-
     def locate(self, scene, x, y):
         super().locate(scene, x, y)
         super().setScale(self.scale)
 
+    def eat_life(self):
+        self.life += 1
+        img = Object('Images/life.png')
+        img.setScale(0.1)
+        img.locate(self.scene, 1200 - len(self.life_img)*50, 650)
+        self.life_img.append(img)
+        img.show()
+
     def add_combo(self):
         self.combo += 1
         self.game_manager.up_velocity()
+        #self.up_background_velocity()
 
         self.MaxCombo = max(self.MaxCombo, self.combo)
 
@@ -88,6 +99,8 @@ class User(Object):
     def crush(self) :
         self.combo = 0
         self.game_manager.init_velocity()
+        #self.down_background_velocity()
+
         burst = Object('Images/burst.png')
         burst.locate(self.scene, 380, 140)
         burst.show()
@@ -117,7 +130,7 @@ class User(Object):
         if self.y == 45:
             self.jump_count = 1
 
-            self.up_velocity = 30
+            self.up_velocity = 25
             self.state = UserState.JUMP
             self.setImage('Images/character/user/jump.png')
             self.user_run_Timer.stop()

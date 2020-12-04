@@ -2,6 +2,7 @@ from Models.RedMan import *
 from Models.Pig import *
 from Models.Turtle import *
 from Models.Bird import *
+from Models.Life import *
 
 from bangtal import Object
 import time
@@ -44,6 +45,11 @@ class Generator(Object):
         bird.locate(self.scene, bird.x, bird.y)
         bird.show()
 
+    def create_life(self, velocity):
+        random_y = random.randrange(45, 500)
+        life = Life(self.scene, 1280, random_y, 450, 450, velocity, self.user, 'Images/life.png', scale = 0.3)
+        life.locate(self.scene, life.x, life.y)
+        life.show()
 
 class GeneratorTimer(Timer):
     def __init__(self, seconds, generator):
@@ -53,7 +59,7 @@ class GeneratorTimer(Timer):
         self.st = time.time()
         self.lock = threading.Lock()
 
-        self.character_num = 4
+        self.character_num = 5
 
     def onTimeout(self):
         now = time.time() - self.st
@@ -72,17 +78,17 @@ class GeneratorTimer(Timer):
         self.start()
 
     def random_choose_character(self):
-        case = random.randint(0, self.character_num - 1)
+        case = random.randint(0, 13)
 
-        #velocity = 10 #TODO 변수화 되어야함, 시간에 따른 & 생성시간도 단축하면 좋음
-
-        if case == 0:
+        if case == 0 or case == 5 or case == 9:
             self.generator.create_redman(self.generator.velocity)
-        elif case == 1:
+        elif case == 1 or case == 6 or case == 10:
             self.generator.create_pig(self.generator.velocity)
-        elif case == 2:
+        elif case == 2 or case == 7 or case == 11:
             self.generator.create_turtle(self.generator.velocity)
-        elif case == 3:
+        elif case == 3 or case == 8 or case == 12:
             self.generator.create_bird(self.generator.velocity)
+        elif case == 4:
+            self.generator.create_life(self.generator.velocity)
         else:
             pass

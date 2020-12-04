@@ -25,7 +25,15 @@ class GameManager:
         self.user = User('Images/character/user/run/user_1.png', self.scene, 0.9, self)
         self.user.locate(self.scene, self.user.x, self.user.y)
         self.user.show()
-        
+
+        def up_background_velocity():
+            self.backgroundTimer.velocity += 1
+        def down_background_velocity():
+            self.backgroundTimer.velocity = 5
+
+        self.user.up_background_velocity = up_background_velocity
+        self.user.down_background_velocity = down_background_velocity
+
         self.generator = Generator(self.scene, self.user)
 
     def up_velocity(self):
