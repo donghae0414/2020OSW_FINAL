@@ -8,9 +8,9 @@ setGameOption(GameOption.MESSAGE_BOX_BUTTON, False)
 MenuScene = Scene('MENU', 'Images/background/background.png')
 GameScene = Scene('GAME', 'Images/button/start.png')
 
-
 startButton = Object('Images/button/start.png')
-startButton.locate(MenuScene, 570, 200)
+startButton.locate(MenuScene, 500, 200)
+startButton.setScale(0.15)
 startButton.show()
 
 def startButton_onMouseAction(x, y, action):

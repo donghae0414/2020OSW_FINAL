@@ -26,7 +26,7 @@ class User(Object):
             img.show()
         
         self.combo = 0
-
+        self.MaxCombo = 0
 
         self.state = UserState.RUN
         self.run_state = 0  # 0 ~ 5
@@ -47,11 +47,10 @@ class User(Object):
 
     def add_combo(self):
         self.combo += 1
-        
+        self.MaxCombo = max(self.MaxCombo, self.combo)
+
         first_num = int(self.combo / 10)
         second_num = self.combo % 10
-
-        print(first_num, second_num)
 
         second = Object('Images/number/' + str(second_num) + '.png')
         second.x = 920; second.y = 500; second.scene = self.scene; second.scale = 0.8
@@ -81,6 +80,7 @@ class User(Object):
     def crush(self) :
         self.combo = 0
         if self.life == 1 :
+            print(self.MaxCombo)
             endGame()
         else :
             self.life -=1
