@@ -78,17 +78,17 @@ class GeneratorTimer(Timer):
         self.start()
 
     def random_choose_character(self):
-        case = random.randint(0, 13)
+        case = random.randint(0, 17)
 
-        if case == 0 or case == 5 or case == 9:
+        if 0 <= case <= 3:
             self.generator.create_redman(self.generator.velocity)
-        elif case == 1 or case == 6 or case == 10:
+        elif 4 <= case <= 7:
             self.generator.create_pig(self.generator.velocity)
-        elif case == 2 or case == 7 or case == 11:
+        elif 8 <= case <= 11:
             self.generator.create_turtle(self.generator.velocity)
-        elif case == 3 or case == 8 or case == 12:
+        elif 12 <= case <= 15:
             self.generator.create_bird(self.generator.velocity)
-        elif case == 4:
+        elif case == 16:
             self.generator.create_life(self.generator.velocity)
         else:
             pass
