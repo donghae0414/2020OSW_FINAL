@@ -40,7 +40,7 @@ class Generator(Object):
 
     def create_bird(self, velocity):
         random_scale = random.randrange(5, 8) / 10
-        random_y = random.randrange(440, 500)
+        random_y = random.randrange(400, 480)
         bird = Bird(self.scene, 1280, random_y, 300, 237, velocity, self.user, 'Images/character/enemy/bird.png', scale=random_scale)
         bird.locate(self.scene, bird.x, bird.y)
         bird.show()
@@ -66,7 +66,7 @@ class GeneratorTimer(Timer):
 
         val = (self.generator.velocity - 10) / 10
 
-        if now > 2 - val :
+        if now > max(2 - val, 0.2) :
             self.lock.acquire()
             self.st = time.time()
             
