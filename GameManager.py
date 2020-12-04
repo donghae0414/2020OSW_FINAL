@@ -38,8 +38,9 @@ class GameManager:
 
     def onKeyBoard(self, key, pressed):
         if key == 84 and pressed:                   # Up Button
-            if self.user.y == 45:
-                self.user.jump()
+            #if self.user.y == 45:
+            #    self.user.jump()
+            self.user.jump()
 
         elif key == 85:                 # Down Button
             if pressed:

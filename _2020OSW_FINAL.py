@@ -1,7 +1,6 @@
 from bangtal import *
 from GameManager import GameManager
 
-
 # Game Options
 setGameOption(GameOption.INVENTORY_BUTTON, False)
 setGameOption(GameOption.MESSAGE_BOX_BUTTON, False)

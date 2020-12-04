@@ -19,6 +19,8 @@ class User(Object):
         self.ahead_velocity = 5
         self.back_velocity = -5
 
+        self.jump_count = 0
+
         self.life = 3
         self.life_img=[]
         for i in range(self.life) :
@@ -112,11 +114,25 @@ class User(Object):
             self.setImage('Images/character/user/run/user_' + str(self.run_state) + '.png')        
     
     def jump(self):
-        self.up_velocity = 30
-        self.state = UserState.JUMP
-        self.setImage('Images/character/user/jump.png')
-        self.user_run_Timer.stop()
-        self.user_jump_Timer.start()
+        if self.y == 45:
+            self.jump_count = 1
+
+            self.up_velocity = 30
+            self.state = UserState.JUMP
+            self.setImage('Images/character/user/jump.png')
+            self.user_run_Timer.stop()
+            self.user_jump_Timer.start()
+        else:
+            if self.jump_count == 1:
+                self.jump_count += 1
+
+                self.up_velocity = 25
+                self.state = UserState.JUMP
+                self.setImage('Images/character/user/jump.png')
+                self.user_run_Timer.stop()
+                self.user_jump_Timer.start()
+            else:
+                pass
 
     def down(self):
         if self.state == UserState.JUMP:
