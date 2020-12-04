@@ -1,5 +1,6 @@
 from enum import Enum
 from bangtal import *
+import time
 
 class User(Object):
     def __init__(self, image, scene):
@@ -41,6 +42,7 @@ class User(Object):
         self.user_run_Timer = UserRunTimer(0.1, self)
         self.user_run_Timer.start()
     
+
     def locate(self, scene, x, y):
         super().locate(scene, x, y)
         super().setScale(self.scale)
@@ -79,6 +81,17 @@ class User(Object):
 
     def crush(self) :
         self.combo = 0
+
+        burst = Object('Images/burst.png')
+        burst.locate(self.scene, 380, 140)
+        #burst.locate(self.scene, self.x, self.y)
+        #burst.setScale(0.5)
+        burst.show()
+
+        bursttimer = BurstTimer(0.3, burst, self)
+        bursttimer.start()
+
+
         if self.life == 1 :
             print(self.MaxCombo)
             endGame()
@@ -194,6 +207,17 @@ class UserRunTimer(Timer):
         
         self.set(0.1)
         self.start()
+
+class BurstTimer(Timer):
+    def __init__(self, seconds, burst, user):
+        super().__init__(seconds)
+        self.burst = burst
+        self.user = user
+        self.second = seconds
+        self.count = 0
+
+    def onTimeout(self):
+        self.burst.hide()
 
 class ComboTimer(Timer):
     def __init__(self, seconds, *objects):

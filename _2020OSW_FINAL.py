@@ -9,7 +9,7 @@ MenuScene = Scene('MENU', 'Images/background/background.png')
 GameScene = Scene('GAME', 'Images/button/start.png')
 
 startButton = Object('Images/button/start.png')
-startButton.locate(MenuScene, 500, 200)
+startButton.locate(MenuScene, 520, 200)
 startButton.setScale(0.15)
 startButton.show()
 
