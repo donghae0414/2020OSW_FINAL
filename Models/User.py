@@ -3,14 +3,16 @@ from bangtal import *
 import time
 
 class User(Object):
-    def __init__(self, image, scene):
+    def __init__(self, image, scene, scale, game_manager):
         super().__init__(image)
         self.image = image
         self.scene = scene
+        self.game_manager = game_manager
 
         self.x = 100;   self.y = 45
         self.x_size = 265;  self.y_size = 260;
-        self.scale = 1
+        self.origin_scale = scale
+        self.scale = scale
 
         self.up_velocity = 0
         self.down_velocity = 0
@@ -49,6 +51,8 @@ class User(Object):
 
     def add_combo(self):
         self.combo += 1
+        self.game_manager.up_velocity()
+
         self.MaxCombo = max(self.MaxCombo, self.combo)
 
         first_num = int(self.combo / 10)
@@ -81,16 +85,13 @@ class User(Object):
 
     def crush(self) :
         self.combo = 0
-
+        self.game_manager.init_velocity()
         burst = Object('Images/burst.png')
         burst.locate(self.scene, 380, 140)
-        #burst.locate(self.scene, self.x, self.y)
-        #burst.setScale(0.5)
         burst.show()
 
         bursttimer = BurstTimer(0.3, burst, self)
         bursttimer.start()
-
 
         if self.life == 1 :
             print(self.MaxCombo)
@@ -118,14 +119,15 @@ class User(Object):
         self.user_jump_Timer.start()
 
     def down(self):
-        #self.down_velocity = 0
-        #self.state = UserState.DOWN
-        #self.user_jump_Timer.stop()
-        #self.user_down_Timer.start()
         if self.state == UserState.JUMP:
             self.up_velocity = -15
         else:                               #TODO 납작 업드리기
-                print('드러눕기 구현해라')
+            self.setScale(0.5)
+            self.scale = 0.5
+
+    def growup(self):
+        self.setScale(self.origin_scale)
+        self.scale = self.origin_scale
 
     def ahead(self):
         self.user_ahead_Timer.start()

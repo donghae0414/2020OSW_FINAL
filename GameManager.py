@@ -22,21 +22,30 @@ class GameManager:
         self.backgroundTimer = BackgroundTimer(0.01, self.scene, self.background1, self.background2)
         self.backgroundTimer.start()
 
-        self.user = User('Images/character/user/run/user_1.png', self.scene)
+        self.user = User('Images/character/user/run/user_1.png', self.scene, 0.9, self)
         self.user.locate(self.scene, self.user.x, self.user.y)
         self.user.show()
         
         self.generator = Generator(self.scene, self.user)
-        
-        
+
+    def up_velocity(self):
+        print('velocity up!')
+        self.generator.velocity += 1
+
+    def init_velocity(self):
+        print('init velocity')
+        self.generator.velocity = 10
 
     def onKeyBoard(self, key, pressed):
         if key == 84 and pressed:                   # Up Button
             if self.user.y == 45:
                 self.user.jump()
 
-        elif key == 85 and pressed:                 # Down Button
-            self.user.down()
+        elif key == 85:                 # Down Button
+            if pressed:
+                self.user.down()
+            else:
+                self.user.growup()
 
         elif key == 83:                             # Ahead Button
             if pressed:

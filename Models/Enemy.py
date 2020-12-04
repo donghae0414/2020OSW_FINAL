@@ -71,7 +71,7 @@ class EnemyTimer(Timer):
 
         threshold = 40
         small_user_x += threshold;  big_user_x -= threshold
-        small_user_y += threshold;  big_user_y -= threshold
+        small_user_y += threshold;  big_user_y -= 30
 
         small_enemy_x += threshold;  big_enemy_x -= threshold
         small_enemy_y += threshold;  big_enemy_y -= threshold
