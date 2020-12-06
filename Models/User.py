@@ -1,18 +1,21 @@
 from enum import Enum
 from bangtal import *
 import time
+import GameManager
 
 class User(Object):
     def __init__(self, image, scene, scale, game_manager):
         super().__init__(image)
+        self.ReGameMenu = Scene('MENU', 'Images/background/background.png')
         self.image = image
         self.scene = scene
         self.game_manager = game_manager
-
+        
         self.x = 100;   self.y = 45
         self.x_size = 265;  self.y_size = 260;
         self.origin_scale = scale
         self.scale = scale
+        self.startTime = time.time()
 
         self.up_velocity = 0
         self.down_velocity = 0
@@ -109,8 +112,7 @@ class User(Object):
         bursttimer.start()
 
         if self.life == 1 :
-            print(self.MaxCombo)
-            endGame()
+            self.menu()
         else :
             self.life -=1
             self.life_img[-1].hide()
@@ -168,6 +170,97 @@ class User(Object):
         self.user_ahead_Timer.stop()
         self.user_back_Timer.stop()
 
+    def menu(self):
+        print(self.MaxCombo)
+        print(round(time.time()- self.startTime,2))
+        self.print_Combo_duration()
+        self.game_manager.generator.timer.stop()
+        ReGameScene = Scene('GAME', 'Images/button/start.png')
+
+        restartButton = Object('Images/button/restart.png')
+        restartButton.locate(self.ReGameMenu, 550, 140)
+        restartButton.setScale(0.3)
+        restartButton.show()
+
+        exitButton = Object('Images/button/exit.png')
+        exitButton.locate(self.ReGameMenu, 550, 80)
+        exitButton.setScale(0.3)
+        exitButton.show()
+
+        def restartButton_onMouseAction(x, y, action):
+            ReGameScene.enter()
+            self.__init__(self.image, self.scene, 0.9, self.game_manager)
+            self.user_run_Timer.stop()
+            newmanager = GameManager.GameManager(ReGameScene)
+        restartButton.onMouseAction = restartButton_onMouseAction
+
+        def exitButton_onMOuseAction(x, y, action):
+            endGame()
+        exitButton.onMouseAction = exitButton_onMOuseAction
+
+        startGame(self.ReGameMenu)
+
+    def print_Combo_duration(self):
+        first_num = int(self.MaxCombo / 10)
+        second_num = self.MaxCombo % 10
+
+        MaxCombo = Object('Images/result/MaxCombo.png')
+        MaxCombo.locate(self.ReGameMenu, 417, 415)
+        MaxCombo.show()
+
+        Duration = Object('Images/result/Duration.png')
+        Duration.locate(self.ReGameMenu, 390, 315)
+        Duration.show()
+
+        first = Object('Images/result/' + str(first_num) + '.png')
+        first.locate(self.ReGameMenu, 675, 415)
+        first.show()
+
+        second = Object('Images/result/' + str(second_num) + '.png')
+        second.locate(self.ReGameMenu, 775, 415)
+        second.show()
+
+        duration = int(round(time.time()- self.startTime,2)*100)
+        
+        if duration < 1000:
+            a = duration // 100
+            c = (duration % 100) // 10
+            d = duration % 10
+        else:
+            a = duration // 1000
+            b = (duration % 1000) // 100
+            bb = Object('Images/result/' + str(b) + '.png')
+            c = ((duration % 1000) % 100) // 10
+            d = duration % 10
+
+        point = Object('Images/result/point.png')
+        aa = Object('Images/result/' + str(a) + '.png')
+        cc = Object('Images/result/' + str(c) + '.png')
+        dd = Object('Images/result/' + str(d) + '.png')
+
+        if duration < 1000:
+            aa.locate(self.ReGameMenu, 675, 315)
+            point.locate(self.ReGameMenu, 748, 315)
+            cc.locate(self.ReGameMenu, 775, 315)
+            dd.locate(self.ReGameMenu, 875, 315)
+             
+            aa.show()
+            point.show()
+            cc.show()
+            dd.show()
+
+        else:
+            aa.locate(self.ReGameMenu, 675, 315)
+            bb.locate(self.ReGameMenu, 760, 315)
+            point.locate(self.ReGameMenu, 845, 315)
+            cc.locate(self.ReGameMenu, 875, 315)
+            dd.locate(self.ReGameMenu, 975, 315)
+
+            aa.show()
+            bb.show()
+            point.show()
+            cc.show()
+            dd.show()        
 
 class UserState(Enum):
     RUN = 0,
