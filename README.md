@@ -16,17 +16,6 @@
 
 장애물을 피할 때마다 콤보가 증가하며 장애물 속도가 점점 빨라진다. 콤보는 캐릭터가 장애물에 닿으면 초기화된다.
 
-## 개발 환경
-
-- Git
-- Python v3.8.5
-- Visual Studio 2019 or Visual Studio Code
-
-## 사용한 라이브러리
-
-- bangtal v0.23
-- black v19.10
-
 ## 실행 방법
 
 1. 파이썬 외부 라이브러리 설치
@@ -49,6 +38,17 @@
 ```shell
 > python _2020OSW_FINAL.py
 ```
+
+## 개발 환경
+
+- Git
+- Python v3.8.5
+- Visual Studio 2019 or Visual Studio Code
+
+## 사용한 라이브러리
+
+- bangtal v0.23
+- black v19.10
 
 ## 개발 환경 설정
 
