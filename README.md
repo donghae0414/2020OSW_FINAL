@@ -1,6 +1,6 @@
 # 중앙대 오픈소스SW와 파이썬 프로그래밍 (조용진)
 
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 오픈소스SW와 파이썬 프로그래밍 03분반 팀 과제
 
