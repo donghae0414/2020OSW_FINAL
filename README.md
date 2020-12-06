@@ -2,7 +2,8 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-오픈소스SW와 파이썬 프로그래밍 03분반 팀 과제
+오픈소스SW와 파이썬 프로그래밍 03분반 팀 과제  
+https://www.youtube.com/watch?v=W3h96D8iSmM  
 
 ## 조작 방법
 
