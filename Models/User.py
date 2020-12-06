@@ -183,8 +183,8 @@ class User(Object):
     def menu(self):
         print(self.MaxCombo)
         print(round(time.time() - self.startTime, 2))
-        self.print_Combo_duration()
         self.game_manager.generator.timer.stop()
+        self.print_Combo_duration()
         ReGameScene = Scene("GAME", "Images/button/start.png")
 
         restartButton = Object("Images/button/restart.png")
