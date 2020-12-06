@@ -2,10 +2,14 @@
 
 오픈소스SW와 파이썬 프로그래밍 03분반 팀 과제
 
-## 사용한 라이브러리
+## 개발 환경
 
 - Git
 - Python v3.8.5
+- Visual Studio 2019 or Visual Studio Code
+
+## 사용한 라이브러리
+
 - bangtal v0.23
 
 ## 실행 방법
