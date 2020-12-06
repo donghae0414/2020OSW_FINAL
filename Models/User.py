@@ -188,12 +188,12 @@ class User(Object):
         ReGameScene = Scene("GAME", "Images/button/start.png")
 
         restartButton = Object("Images/button/restart.png")
-        restartButton.locate(self.ReGameMenu, 550, 140)
+        restartButton.locate(self.ReGameMenu, 561, 140)
         restartButton.setScale(0.3)
         restartButton.show()
 
         exitButton = Object("Images/button/exit.png")
-        exitButton.locate(self.ReGameMenu, 550, 80)
+        exitButton.locate(self.ReGameMenu, 561, 80)
         exitButton.setScale(0.3)
         exitButton.show()
 
@@ -213,66 +213,67 @@ class User(Object):
         startGame(self.ReGameMenu)
 
     def print_Combo_duration(self):
-        first_num = int(self.MaxCombo / 10)
-        second_num = self.MaxCombo % 10
+        showMessage('MaxCombo : {}           Duration : {}'.format(self.MaxCombo, round(time.time() - self.startTime, 2)))
+        # first_num = int(self.MaxCombo / 10)
+        # second_num = self.MaxCombo % 10
 
-        MaxCombo = Object("Images/result/MaxCombo.png")
-        MaxCombo.locate(self.ReGameMenu, 417, 415)
-        MaxCombo.show()
+        # MaxCombo = Object("Images/result/MaxCombo.png")
+        # MaxCombo.locate(self.ReGameMenu, 417, 415)
+        # MaxCombo.show()
 
-        Duration = Object("Images/result/Duration.png")
-        Duration.locate(self.ReGameMenu, 390, 315)
-        Duration.show()
+        # Duration = Object("Images/result/Duration.png")
+        # Duration.locate(self.ReGameMenu, 390, 315)
+        # Duration.show()
 
-        first = Object("Images/result/" + str(first_num) + ".png")
-        first.locate(self.ReGameMenu, 675, 415)
-        first.show()
+        # first = Object("Images/result/" + str(first_num) + ".png")
+        # first.locate(self.ReGameMenu, 675, 415)
+        # first.show()
 
-        second = Object("Images/result/" + str(second_num) + ".png")
-        second.locate(self.ReGameMenu, 775, 415)
-        second.show()
+        # second = Object("Images/result/" + str(second_num) + ".png")
+        # second.locate(self.ReGameMenu, 775, 415)
+        # second.show()
 
-        duration = int(round(time.time() - self.startTime, 2) * 100)
+        # duration = int(round(time.time() - self.startTime, 2) * 100)
 
-        if duration < 1000:
-            a = duration // 100
-            c = (duration % 100) // 10
-            d = duration % 10
-        else:
-            a = duration // 1000
-            b = (duration % 1000) // 100
-            bb = Object("Images/result/" + str(b) + ".png")
-            c = ((duration % 1000) % 100) // 10
-            d = duration % 10
+        # if duration < 1000:
+        #     a = duration // 100
+        #     c = (duration % 100) // 10
+        #     d = duration % 10
+        # else:
+        #     a = duration // 1000
+        #     b = (duration % 1000) // 100
+        #     bb = Object("Images/result/" + str(b) + ".png")
+        #     c = ((duration % 1000) % 100) // 10
+        #     d = duration % 10
 
-        point = Object("Images/result/point.png")
-        aa = Object("Images/result/" + str(a) + ".png")
-        cc = Object("Images/result/" + str(c) + ".png")
-        dd = Object("Images/result/" + str(d) + ".png")
+        # point = Object("Images/result/point.png")
+        # aa = Object("Images/result/" + str(a) + ".png")
+        # cc = Object("Images/result/" + str(c) + ".png")
+        # dd = Object("Images/result/" + str(d) + ".png")
 
-        if duration < 1000:
-            aa.locate(self.ReGameMenu, 675, 315)
-            point.locate(self.ReGameMenu, 748, 315)
-            cc.locate(self.ReGameMenu, 775, 315)
-            dd.locate(self.ReGameMenu, 875, 315)
+        # if duration < 1000:
+        #     aa.locate(self.ReGameMenu, 675, 315)
+        #     point.locate(self.ReGameMenu, 748, 315)
+        #     cc.locate(self.ReGameMenu, 775, 315)
+        #     dd.locate(self.ReGameMenu, 875, 315)
 
-            aa.show()
-            point.show()
-            cc.show()
-            dd.show()
+        #     aa.show()
+        #     point.show()
+        #     cc.show()
+        #     dd.show()
 
-        else:
-            aa.locate(self.ReGameMenu, 675, 315)
-            bb.locate(self.ReGameMenu, 760, 315)
-            point.locate(self.ReGameMenu, 845, 315)
-            cc.locate(self.ReGameMenu, 875, 315)
-            dd.locate(self.ReGameMenu, 975, 315)
+        # else:
+        #     aa.locate(self.ReGameMenu, 675, 315)
+        #     bb.locate(self.ReGameMenu, 760, 315)
+        #     point.locate(self.ReGameMenu, 845, 315)
+        #     cc.locate(self.ReGameMenu, 875, 315)
+        #     dd.locate(self.ReGameMenu, 975, 315)
 
-            aa.show()
-            bb.show()
-            point.show()
-            cc.show()
-            dd.show()
+        #     aa.show()
+        #     bb.show()
+        #     point.show()
+        #     cc.show()
+        #     dd.show()
 
 
 class UserState(Enum):
