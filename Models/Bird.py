@@ -2,8 +2,9 @@ from Models.Enemy import Enemy, EnemyTimer
 from bangtal import *
 import random
 
+
 class Bird(Enemy):
-    def __init__(self, scene, x, y, x_size, y_size, velocity, user, image='/Images/character/enemy/bird.png', scale=1):
+    def __init__(self, scene, x, y, x_size, y_size, velocity, user, image="/Images/character/enemy/bird.png", scale=1):
         super().__init__(scene, x, y, x_size, y_size, velocity, user, image, scale)
 
         self.timer = EnemyTimer(0.01, self, self.user)

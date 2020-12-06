@@ -1,5 +1,6 @@
 from bangtal import Timer
 
+
 class BackgroundTimer(Timer):
     def __init__(self, seconds, scene, background1, background2):
         super().__init__(seconds)
@@ -10,7 +11,7 @@ class BackgroundTimer(Timer):
 
     def onTimeout(self):
         v = self.velocity
-        
+
         self.background1.x -= v
         if self.background1.x <= -1280:
             self.background1.x = 1280
